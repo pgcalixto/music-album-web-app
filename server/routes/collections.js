@@ -43,4 +43,19 @@ router.patch('/:collection_id', function(req, res, next) {
   });
 });
 
+/* GET collection albums. */
+router.get('/:collection_id/albums', function(req, res, next) {
+  var params = req.body;
+  params.id = req.params.collection_id;
+  collectionDao.retrieveAlbums(params, (err, results) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send({message: err.message || "Database failure."});
+    } else {
+      console.log(results);
+      res.send(results);
+    }
+  });
+});
+
 module.exports = router;

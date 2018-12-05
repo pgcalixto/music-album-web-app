@@ -62,7 +62,7 @@ module.exports = {
     }
 
     var queryString = 'UPDATE collection SET ? WHERE ?';
-    const idParam = JSON.parse(JSON.stringify({id: params.id}));
+    const idParam = {id: params.id};
     delete params.id;
 
     pool.query(queryString, [params, idParam], function(error, results) {
@@ -73,6 +73,36 @@ module.exports = {
         const message = 'Successfully inserted ' + JSON.stringify(params) + '.';
         console.log(message);
         callback(null, {message: message});
+      }
+    });
+  },
+
+  retrieveAlbums: function(params, callback) {
+    if (params.id == null) {
+      callback({message: 'ID must be provided.'}, null);
+    }
+
+    const paramKeys = new Set(['id']);
+    const keysAreValid = validateParamKeys(paramKeys, params);
+    if (keysAreValid.error) {
+      callback(keysAreValid.error, null);
+      return;
+    }
+
+    var queryString = 'SELECT a.id, a.title, a.artist, a.year FROM' +
+      ' collection_albums as ca INNER JOIN album as a ON ca.album_id = a.id' +
+      ' WHERE ?'
+    const idParam = {'ca.collection_id': params.id};
+
+    pool.query(queryString, idParam, function(error, results) {
+      if (error) {
+        console.log(error);
+        callback(error, null);
+      } else {
+        const message = 'Successfully queryied albums for id = ' +
+          idParam['ca.collection_id'] + '.';
+        console.log(message);
+        callback(null, results);
       }
     });
   }

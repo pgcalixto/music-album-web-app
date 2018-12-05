@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
+import {
+  FormGroup,
+  FormControl,
+  ControlLabel,
+  Button,
+  Table
+} from 'react-bootstrap';
 
 export default class Collection extends Component {
   constructor(props) {
@@ -9,6 +15,7 @@ export default class Collection extends Component {
     // collection, while `collection` contains the forms input. they both exist
     // to enable the Submit button only when they differ.
     this.state = {
+      albums: null,
       collection: null,
       originalCollection: null
     };
@@ -116,17 +123,46 @@ export default class Collection extends Component {
                                 this.state.collection)}
           >Salvar</Button>
         </form>
+        {this.state.albums == null
+        ? null
+        : <Table striped bordered condensed hover>
+            <caption>Álbuns da coleção</caption>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Artista</th>
+                <th>Ano</th>
+              </tr>
+            </thead>
+            <tbody>
+              { this.state.albums.map(value =>
+                <tr key={value.id}>
+                  <td> {value.id} </td>
+                  <td> {value.title} </td>
+                  <td> {value.artist} </td>
+                  <td> {value.year} </td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
+        }
       </div>
     );
   }
 
   async fetchCollection() {
     const collection_id = this.props.match.params.collection_id;
-    const response = await fetch('/collections/' + collection_id);
+    var response = await fetch('/collections/' + collection_id);
     const collection = await response.json();
+
+    response = await fetch('/collections/' + collection_id + '/albums');
+    const albums = await response.json();
+
     // JSON.parse(JSON.stringify) is used for deep copy of the objects, to make
     // sure collection and originalCollection are not the same object
     this.setState({
+      albums: albums,
       collection: JSON.parse(JSON.stringify(collection)),
       originalCollection: JSON.parse(JSON.stringify(collection))
     });
