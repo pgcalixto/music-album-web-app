@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import Albums from '../components/Albums';
+import Collections from '../components/Collections';
 
 export default class Home extends Component {
 
   state = {
-    albums: null
+    albums: null,
+    collections: null
   };
 
   async renderAlbums() {
@@ -15,7 +17,17 @@ export default class Home extends Component {
     this.setState({ albums: albums });
   }
 
+  async renderCollections() {
+    const response = await fetch('/collections');
+    const collectionList = await response.json();
+
+    var collections = <Collections collections={collectionList} />;
+    this.setState({ collections: collections });
+  }
+
+
   componentDidMount() {
+    this.renderCollections();
     this.renderAlbums();
   }
 
@@ -24,6 +36,7 @@ export default class Home extends Component {
       <div className="Home">
         Olá Mundo
         { this.state.albums }
+        { this.state.collections }
       </div>
     );
   }
