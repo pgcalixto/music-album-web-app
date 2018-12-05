@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import Albums from '../components/Albums';
 import Collections from '../components/Collections';
 
@@ -35,6 +36,9 @@ export default class Home extends Component {
     return (
       <div className="Home">
         Olá Mundo
+        <br />
+        <Link to="/add-album/">Adicionar novo álbum</Link>
+        <br />
         { this.state.albums }
         { this.state.collections }
       </div>

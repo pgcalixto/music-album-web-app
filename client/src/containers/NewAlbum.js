@@ -1,0 +1,88 @@
+import React, { Component } from 'react';
+import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
+
+class NewAlbum extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: '',
+      artist: '',
+      year: ''
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  titleCase = str => {
+    return str.toLowerCase().split(' ').map(word => {
+      return (word.charAt(0).toUpperCase() + word.slice(1));
+    }).join(' ');
+  }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.id]: event.target.id === 'year'
+        ? event.target.value.replace(/\D/g,'')
+        : event.target.value
+    });
+  }
+
+  async submitForm(event) {
+    event.preventDefault();
+
+    const request = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        title: this.state.title,
+        artist: this.state.artist,
+        year: parseInt(this.state.year, 10)
+      })
+    };
+
+    await fetch("/albums/", request)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(JSON.stringify(data));
+      });
+
+    this.props.history.push('/');
+  }
+
+  render() {
+
+    const fieldNames_ptbr = ['título', 'artista', 'ano'];
+    const fields = ['title', 'artist', 'year'];
+
+    return (
+      <div>
+        ADICIONAR ÁLBUM
+        <form onSubmit={this.submitForm.bind(this)}>
+          {fields.map((field, index) =>
+            <FormGroup
+              key={field}
+              controlId={field}
+            >
+              <ControlLabel>
+                {this.titleCase(fieldNames_ptbr[index])}:
+              </ControlLabel>
+              <FormControl
+                type="text"
+                value={this.state[field]}
+                placeholder=""
+                onChange={this.handleChange}
+              />
+            </FormGroup>
+          )}
+          <Button type="submit">Submeter</Button>
+        </form>
+      </div>
+    );
+  }
+}
+
+export default NewAlbum;

@@ -13,4 +13,15 @@ router.get('/', function(req, res, next) {
   });
 });
 
+/* POST new album. */
+router.post('/', function(req, res, next) {
+  albumDao.create(req.body, (err, results) => {
+    if (err) {
+      res.status(500).send({message: err.message || "Database failure."});
+    } else {
+      res.send(results);
+    }
+  });
+});
+
 module.exports = router;

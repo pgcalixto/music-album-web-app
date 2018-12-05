@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Home from './Home';
+import NewAlbum from './NewAlbum';
 
 export default class Main extends Component {
   render() {
@@ -8,6 +9,7 @@ export default class Main extends Component {
       <main>
         <Switch>
           <Route exact path='/' component={Home}/>
+          <Route path='/add-album' component={NewAlbum}/>
         </Switch>
       </main>
     )
