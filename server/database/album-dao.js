@@ -28,6 +28,25 @@ module.exports = {
     });
   },
 
+  retrieve: function(param, callback) {
+
+    const paramKey = new Set(['id']);
+    const keyIsValid = validateParamKeys(paramKey, param);
+    if (keyIsValid.error) {
+      callback(keyIsValid.error, null);
+      return;
+    }
+
+    var queryString = 'SELECT * FROM album WHERE ?';
+    pool.query(queryString, param, function(error, results) {
+      if (error) {
+        callback(error, null);
+      } else {
+        callback(null, results);
+      }
+    });
+  },
+
   create: function(params, callback) {
 
     const paramKeys = new Set(['title', 'artist', 'year']);
