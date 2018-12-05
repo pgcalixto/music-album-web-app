@@ -1,5 +1,20 @@
 var pool = require('./pool-factory');
 
+validateParamKeys = (paramSet, params) => {
+  for (let key of Object.keys(params)) {
+    if (paramSet.has(key) === false) {
+      return {
+        error: {message: key + ' is not a valid field to update.'},
+        valid: false
+      };
+    }
+  }
+  return {
+    error: null,
+    valid: true
+  }
+}
+
 module.exports = {
   list: function(callback) {
     var queryString = 'SELECT * FROM collection';
@@ -12,4 +27,53 @@ module.exports = {
       }
     });
   },
+
+  retrieve: function(param, callback) {
+
+    const paramKey = new Set(['id']);
+    const keyIsValid = validateParamKeys(paramKey, param);
+    if (keyIsValid.error) {
+      callback(keyIsValid.error, null);
+      return;
+    }
+
+    console.log(param);
+
+    var queryString = 'SELECT * FROM collection WHERE ?';
+    pool.query(queryString, param, function(error, results) {
+      if (error) {
+        callback(error, null);
+      } else {
+        callback(null, results);
+      }
+    });
+  },
+
+  partialUpdate: function(params, callback) {
+    if (params.id == null) {
+      callback({message: 'ID must be provided.'}, null);
+    }
+
+    const paramKeys = new Set(['id', 'name']);
+    const keysAreValid = validateParamKeys(paramKeys, params);
+    if (keysAreValid.error) {
+      callback(keysAreValid.error, null);
+      return;
+    }
+
+    var queryString = 'UPDATE collection SET ? WHERE ?';
+    const idParam = JSON.parse(JSON.stringify({id: params.id}));
+    delete params.id;
+
+    pool.query(queryString, [params, idParam], function(error, results) {
+      if (error) {
+        console.log(error);
+        callback(error, null);
+      } else {
+        const message = 'Successfully inserted ' + JSON.stringify(params) + '.';
+        console.log(message);
+        callback(null, {message: message});
+      }
+    });
+  }
 }

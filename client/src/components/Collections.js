@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Table } from "react-bootstrap";
 
 export default class Collections extends Component {
@@ -17,7 +18,9 @@ export default class Collections extends Component {
           { this.props.collections.map(value =>
             <tr key={value.id}>
               <td> {value.id} </td>
-              <td> {value.name} </td>
+              <td> <Link to={"/collections/" + value.id}>
+                {value.name}
+              </Link> </td>
             </tr>
           )}
         </tbody>
