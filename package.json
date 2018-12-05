@@ -1,0 +1,13 @@
+{
+  "name": "music-album-web-app",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "./node_modules/.bin/concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "server": "cd server && PORT=${SERVER_PORT:-5000} ./node_modules/.bin/nodemon ./bin/www",
+    "client": "cd client && PORT=${CLIENT_PORT:-3000} npm start"
+  },
+  "dependencies": {
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.7"
+  }
+}
