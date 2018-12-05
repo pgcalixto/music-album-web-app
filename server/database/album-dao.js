@@ -67,5 +67,36 @@ module.exports = {
         callback(null, {message: message});
       }
     });
+  },
+
+  partialUpdate: function(params, callback) {
+    if (params.id == null) {
+      callback({message: 'ID must be provided.'}, null);
+    }
+
+    const paramKeys = new Set(['id', 'title', 'artist', 'year']);
+    const keysAreValid = validateParamKeys(paramKeys, params);
+    if (keysAreValid.error) {
+      callback(keysAreValid.error, null);
+      return;
+    }
+
+    var queryString = 'UPDATE album SET ? WHERE ?';
+    const idParam = JSON.parse(JSON.stringify({id: params.id}));
+    delete params.id;
+
+    console.log(params);
+    console.log(idParam);
+
+    pool.query(queryString, [params, idParam], function(error, results) {
+      if (error) {
+        console.log(error);
+        callback(error, null);
+      } else {
+        const message = 'Successfully inserted ' + JSON.stringify(params) + '.';
+        console.log(message);
+        callback(null, {message: message});
+      }
+    });
   }
 }

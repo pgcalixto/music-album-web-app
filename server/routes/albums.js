@@ -39,4 +39,20 @@ router.get('/:album_id', function(req, res, next) {
   });
 });
 
+/* PATCH album fields. */
+router.patch('/:album_id', function(req, res, next) {
+  var params = req.body;
+  params.id = req.params.album_id;
+  albumDao.partialUpdate(params, (err, results) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send({message: err.message || "Dabatase failure."});
+    } else {
+      console.log(results);
+      // if (results.length === 0)
+      res.send(results);
+    }
+  });
+});
+
 module.exports = router;
