@@ -58,4 +58,21 @@ router.get('/:collection_id/albums', function(req, res, next) {
   });
 });
 
+/* DELETE album from collection. */
+router.delete('/:collection_id/albums/:album_id', function(req, res, next) {
+  const params = {
+    'collection_id': req.params.collection_id,
+    'album_id': req.params.album_id
+  };
+  collectionDao.deleteOneAlbum(params, (err, results) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send({message: err.message || "Database failure."});
+    } else {
+      console.log(results);
+      res.send(results);
+    }
+  });
+});
+
 module.exports = router;

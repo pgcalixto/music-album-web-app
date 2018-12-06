@@ -4,7 +4,7 @@ validateParamKeys = (paramSet, params) => {
   for (let key of Object.keys(params)) {
     if (paramSet.has(key) === false) {
       return {
-        error: {message: key + ' is not a valid field to update.'},
+        error: {message: key + ' is not a valid field for this query.'},
         valid: false
       };
     }
@@ -52,6 +52,7 @@ module.exports = {
   partialUpdate: function(params, callback) {
     if (params.id == null) {
       callback({message: 'ID must be provided.'}, null);
+      return;
     }
 
     const paramKeys = new Set(['id', 'name']);
@@ -80,6 +81,7 @@ module.exports = {
   retrieveAlbums: function(params, callback) {
     if (params.id == null) {
       callback({message: 'ID must be provided.'}, null);
+      return;
     }
 
     const paramKeys = new Set(['id']);
@@ -101,6 +103,34 @@ module.exports = {
       } else {
         const message = 'Successfully queryied albums for id = ' +
           idParam['ca.collection_id'] + '.';
+        console.log(message);
+        callback(null, results);
+      }
+    });
+  },
+
+  deleteOneAlbum: function(params, callback) {
+
+    // check if desired keys are present
+    const paramKeys = new Set(['collection_id', 'album_id']);
+    const keysAreValid = validateParamKeys(paramKeys, params);
+    if (keysAreValid.error) {
+      callback(keysAreValid.error, null);
+      return;
+    }
+
+    var queryString = 'DELETE FROM collection_albums WHERE ? AND ?';
+    var idParams = [
+      {collection_id: params.collection_id},
+      {album_id: params.album_id}
+    ];
+
+    pool.query(queryString, idParams, function(error, results) {
+      if (error) {
+        console.log(error);
+        callback(error, null);
+      } else {
+        const message = 'Successfully removed ' + params + '.';
         console.log(message);
         callback(null, results);
       }

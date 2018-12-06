@@ -15,12 +15,13 @@ export default class Collection extends Component {
     // collection, while `collection` contains the forms input. they both exist
     // to enable the Submit button only when they differ.
     this.state = {
-      albums: null,
+      albums: [],
       collection: null,
       originalCollection: null
     };
     this.handleChange = this.handleChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
+    this.submitDeleteAlbum = this.submitDeleteAlbum.bind(this);
     this.isEquivalent = this.isEquivalent.bind(this);
   }
 
@@ -89,6 +90,28 @@ export default class Collection extends Component {
     window.location.reload();
   }
 
+  async submitDeleteAlbum(event) {
+    event.preventDefault();
+
+    const request = {
+      method: "DELETE"
+    };
+
+    const collection_id = this.props.match.params.collection_id;
+    const album_id = event.target.id;
+    const url = '/collections/' + collection_id + '/albums/' + album_id;
+
+    await fetch(url, request)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(JSON.stringify(data));
+      });
+
+    window.location.reload();
+  }
+
   renderInformation() {
     const fieldNames_ptbr = ['Nome'];
     const fields = ['name'];
@@ -123,7 +146,7 @@ export default class Collection extends Component {
                                 this.state.collection)}
           >Salvar</Button>
         </form>
-        {this.state.albums == null
+        {this.state.albums.length === 0
         ? null
         : <Table striped bordered condensed hover>
             <caption>Álbuns da coleção</caption>
@@ -142,6 +165,11 @@ export default class Collection extends Component {
                   <td> {value.title} </td>
                   <td> {value.artist} </td>
                   <td> {value.year} </td>
+                  <td>
+                    <form id={value.id} onSubmit={this.submitDeleteAlbum}>
+                      <Button type="submit">Remover da coleção</Button>
+                    </form>
+                  </td>
                 </tr>
               )}
             </tbody>
