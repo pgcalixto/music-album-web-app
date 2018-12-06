@@ -78,6 +78,27 @@ module.exports = {
     });
   },
 
+  addAlbum: function(params, callback) {
+    const paramKeys = new Set(['collection_id', 'album_id']);
+    const keysAreValid = validateParamKeys(paramKeys, params);
+    if (keysAreValid.error) {
+      callback(keysAreValid.error, null);
+      return;
+    }
+
+    var queryString = 'INSERT INTO collection_albums SET ?';
+    pool.query(queryString, params, function(error, results) {
+      if (error) {
+        console.log(error);
+        callback(error, null);
+      } else {
+        const message = 'Successfully inserted ' + JSON.stringify(params) + '.';
+        console.log(message);
+        callback(null, {message: message});
+      }
+    });
+  },
+
   retrieveAlbums: function(params, callback) {
     if (params.id == null) {
       callback({message: 'ID must be provided.'}, null);
@@ -103,6 +124,36 @@ module.exports = {
       } else {
         const message = 'Successfully queryied albums for id = ' +
           idParam['ca.collection_id'] + '.';
+        console.log(message);
+        callback(null, results);
+      }
+    });
+  },
+
+  retrieveRemainingAlbums: function(params, callback) {
+    if (params.id == null) {
+      callback({message: 'ID must be provided.'}, null);
+      return;
+    }
+
+    const paramKeys = new Set(['id']);
+    const keysAreValid = validateParamKeys(paramKeys, params);
+    if (keysAreValid.error) {
+      callback(keysAreValid.error, null);
+      return;
+    }
+
+    var queryString = 'SELECT * FROM album WHERE id NOT IN' +
+      '(SELECT album_id FROM collection_albums WHERE ?)';
+    const idParam = {collection_id: params.id};
+
+    pool.query(queryString, idParam, function(error, results) {
+      if (error) {
+        console.log(error);
+        callback(error, null);
+      } else {
+        const message = 'Successfully queryied albums for id = ' +
+          idParam.collection_id + '.';
         console.log(message);
         callback(null, results);
       }

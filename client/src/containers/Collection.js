@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import {
   FormGroup,
   FormControl,
@@ -113,6 +114,7 @@ export default class Collection extends Component {
   }
 
   renderInformation() {
+    const collection_id = this.props.match.params.collection_id
     const fieldNames_ptbr = ['Nome'];
     const fields = ['name'];
 
@@ -146,6 +148,10 @@ export default class Collection extends Component {
                                 this.state.collection)}
           >Salvar</Button>
         </form>
+        <Link
+          to={"/collections/" + collection_id + "/add-albums/"}>
+          Adicionar novo álbum
+        </Link>
         {this.state.albums.length === 0
         ? null
         : <Table striped bordered condensed hover>

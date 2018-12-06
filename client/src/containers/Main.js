@@ -4,6 +4,7 @@ import Home from './Home';
 import NewAlbum from './NewAlbum';
 import Album from './Album';
 import Collection from './Collection';
+import CollectionAddAlbums from './CollectionAddAlbums';
 
 export default class Main extends Component {
   render() {
@@ -11,9 +12,12 @@ export default class Main extends Component {
       <main>
         <Switch>
           <Route exact path='/' component={Home}/>
-          <Route path='/add-album' component={NewAlbum}/>
+          <Route path='/new-album' component={NewAlbum}/>
           <Route path='/albums/:album_id' component={Album}/>
-          <Route path='/collections/:collection_id' component={Collection}/>
+          <Route exact path='/collections/:collection_id'
+            component={Collection}/>
+          <Route path='/collections/:collection_id/add-albums'
+            component={CollectionAddAlbums}/>
         </Switch>
       </main>
     )

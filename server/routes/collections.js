@@ -58,6 +58,23 @@ router.get('/:collection_id/albums', function(req, res, next) {
   });
 });
 
+/* POST add album to collection. */
+router.post('/:collection_id/albums', function(req, res, next) {
+  // build album and collection ID params
+  var params = req.body;
+  params.collection_id = req.params.collection_id;
+  params.album_id = params.id;
+  delete params.id;
+
+  collectionDao.addAlbum(params, (err, results) => {
+    if (err) {
+      res.status(500).send({message: err.message || "Database failure."});
+    } else {
+      res.send(results);
+    }
+  });
+});
+
 /* DELETE album from collection. */
 router.delete('/:collection_id/albums/:album_id', function(req, res, next) {
   const params = {
@@ -70,6 +87,18 @@ router.delete('/:collection_id/albums/:album_id', function(req, res, next) {
       res.status(500).send({message: err.message || "Database failure."});
     } else {
       console.log(results);
+      res.send(results);
+    }
+  });
+});
+
+/* GET albums not in collection. */
+router.get('/:collection_id/remaining-albums', function(req, res, next) {
+  const idParam = {id: req.params.collection_id};
+  collectionDao.retrieveRemainingAlbums(idParam, (err, results) => {
+    if (err) {
+      res.status(500).send({message: err.message || "Database failure."});
+    } else {
       res.send(results);
     }
   });
