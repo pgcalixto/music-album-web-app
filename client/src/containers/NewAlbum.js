@@ -11,6 +11,7 @@ class NewAlbum extends Component {
       year: ''
     };
     this.handleChange = this.handleChange.bind(this);
+    this.submitForm = this.submitForm.bind(this);
   }
 
   titleCase = str => {
@@ -61,7 +62,7 @@ class NewAlbum extends Component {
     return (
       <div>
         ADICIONAR ÁLBUM
-        <form onSubmit={this.submitForm.bind(this)}>
+        <form onSubmit={this.submitForm}>
           {fields.map((field, index) =>
             <FormGroup
               key={field}

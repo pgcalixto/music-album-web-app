@@ -85,9 +85,6 @@ module.exports = {
     const idParam = JSON.parse(JSON.stringify({id: params.id}));
     delete params.id;
 
-    console.log(params);
-    console.log(idParam);
-
     pool.query(queryString, [params, idParam], function(error, results) {
       if (error) {
         console.log(error);

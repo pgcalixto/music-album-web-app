@@ -49,7 +49,6 @@ router.patch('/:album_id', function(req, res, next) {
       res.status(500).send({message: err.message || "Dabatase failure."});
     } else {
       console.log(results);
-      // if (results.length === 0)
       res.send(results);
     }
   });
