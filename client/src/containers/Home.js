@@ -37,7 +37,7 @@ export default class Home extends Component {
   render() {
     return (
       <div className="Home">
-        Olá Mundo
+        {`ÁLBUNS E COLEÇÕES`}
         <br />
         <Link to="/add-album/">Adicionar novo álbum</Link>
         <br />
