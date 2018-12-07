@@ -10,6 +10,8 @@ class NewAlbum extends Component {
       artist: '',
       year: ''
     };
+    // TODO add validation state and FormControl.Feedback
+    // TODO only enable button when title, artist and year are correct
     this.handleChange = this.handleChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }

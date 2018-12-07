@@ -11,6 +11,7 @@ export default class Home extends Component {
   };
 
   async renderAlbums() {
+    // TODO check for fetch() and json() errors
     const response = await fetch('/albums');
     const albumList = await response.json();
 
@@ -19,6 +20,7 @@ export default class Home extends Component {
   }
 
   async renderCollections() {
+    // TODO check for fetch() and json() errors
     const response = await fetch('/collections');
     const collectionList = await response.json();
 
