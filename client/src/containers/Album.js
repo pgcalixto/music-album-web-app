@@ -17,15 +17,15 @@ export default class Album extends Component {
     this.isEquivalent = this.isEquivalent.bind(this);
   }
 
+  /**
+   * Checks if two Objects have equal field values.
+   *
+   * @param {Object} a - First object to be compared to.
+   * @param {Object} b - Second object to be compared to.
+   * @returns {Boolean} True if all Object's values are equal to each other,
+   *                    false otherwise.
+   */
   isEquivalent(a, b) {
-    /**
-     * Checks if two Objects have equal field values.
-     *
-     * @param {Object} a - First object to be compared to.
-     * @param {Object} b - Second object to be compared to.
-     * @returns {Boolean} True if all Object's values are equal to each other,
-     *                    false otherwise.
-     */
     if (a == null || b == null) {
       if (a == null && b == null) { return true; }
       return false;
@@ -72,7 +72,8 @@ export default class Album extends Component {
       body: JSON.stringify(params)
     };
 
-    await fetch("/albums/" + this.props.match.params.album_id, request)
+    const album_id = this.props.match.params.album_id;
+    await fetch("/albums/" + album_id, request)
       .then(function (response) {
         return response.json();
       })
@@ -102,7 +103,7 @@ export default class Album extends Component {
               <FormControl
                 type="text"
                 value={
-                  this.state.album === undefined || this.state.album === null
+                  this.state.album == null
                   ? ''
                   : this.state.album[field]}
                 placeholder=""
@@ -114,7 +115,7 @@ export default class Album extends Component {
             type="submit"
             disabled={
               this.isEquivalent(this.state.originalAlbum, this.state.album)}
-          >Submeter</Button>
+          >Salvar</Button>
         </form>
       </div>
     );
