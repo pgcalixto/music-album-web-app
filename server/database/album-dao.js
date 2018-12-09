@@ -56,8 +56,9 @@ module.exports = {
       return;
     }
 
-    var queryString = "SELECT * FROM album WHERE title LIKE '\%" + params.name +
-                      "\%'";
+    var queryParam = "LIKE '\%" + params.name + "\%'";
+    var queryString = "SELECT * FROM album WHERE title " + queryParam +
+                      "OR artist " + queryParam;
     pool.query(queryString, function(error, results) {
       if (error) {
         console.log(error);
