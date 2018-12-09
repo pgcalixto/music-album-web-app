@@ -47,6 +47,29 @@ module.exports = {
     });
   },
 
+  retrieveByName: function(params, callback) {
+
+    const paramKeys = new Set(['name']);
+    const keysAreValid = validateParamKeys(paramKeys, params);
+    if (keysAreValid.error) {
+      callback(keysAreValid.error, null);
+      return;
+    }
+
+    var queryString = "SELECT * FROM album WHERE title LIKE '\%" + params.name +
+                      "\%'";
+    pool.query(queryString, function(error, results) {
+      if (error) {
+        console.log(error);
+        callback(error, null);
+      } else {
+        const message = 'Successfully queried ' + JSON.stringify(params) + '.';
+        console.log(message);
+        callback(null, results);
+      }
+    });
+  },
+
   create: function(params, callback) {
 
     const paramKeys = new Set(['title', 'artist', 'year']);
