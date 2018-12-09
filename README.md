@@ -30,3 +30,5 @@ npm start
 
 * Set password from command line (environment variable or argument) for
   `setup.sh` and `server/database/pool-factory.js`.
+* Add tests for the Node server (include API validation)
+* Add tests for the React client
