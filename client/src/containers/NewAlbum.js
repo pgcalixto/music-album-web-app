@@ -85,7 +85,7 @@ export default class NewAlbum extends Component {
                   value={this.state[field]}
                   placeholder=""
                   onChange={this.handleChange}
-                  />
+                />
               </FormGroup>
             )}
             <Button bsStyle="primary" type="submit">Submeter</Button>
