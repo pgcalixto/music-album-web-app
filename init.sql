@@ -36,12 +36,13 @@ CREATE TABLE collection_albums (
 );
 
 INSERT INTO album (title, artist, year) VALUES
-    ('Quen II', 'Queen', 1974),
+    ('Queen II', 'Queen', 1974),
     ('Help!', 'Beatles', 1965),
     ('Gemini', 'Macklemore', 2017),
     ('Tim Maia', 'Tim Maia', 1973),
     ('Vamos pro mundo', 'Os Novos Baianos', 1974),
     ('Reggae Power: Ao Vivo', 'Natiruts', 2006),
+    ('Vamos Dançar', 'Claudinho & Buchecha', 2002),
     ('Velocidade da Luz', 'Grupo Revelação', 2006),
     ('WS In Miami Beach', 'Wesley Safadao', 2017),
     ('A diferença está no ar - volume 3', 'Aviões do Forró', 2006);
@@ -50,7 +51,9 @@ INSERT INTO collection (name) VALUES
     ('Preferidos'),
     ('Forró'),
     ('Internacionais'),
-    ('Antigas');
+    ('Antigas'),
+    ('Todos os álbums'),
+    ('Nenhum álbum');
 
 INSERT INTO collection_albums (collection_id, album_id) VALUES
     (1, 1),
@@ -65,4 +68,14 @@ INSERT INTO collection_albums (collection_id, album_id) VALUES
     (4, 1),
     (4, 2),
     (4, 4),
-    (4, 5);
+    (4, 5),
+    (5, 1),
+    (5, 2),
+    (5, 3),
+    (5, 4),
+    (5, 5),
+    (5, 6),
+    (5, 7),
+    (5, 8),
+    (5, 9),
+    (5, 10);
