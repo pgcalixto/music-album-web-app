@@ -1,5 +1,6 @@
 var pool = require('./pool-factory');
 
+// TODO make the function check if all parameters in the set are met.
 validateParamKeys = (paramSet, params) => {
   for (let key of Object.keys(params)) {
     if (paramSet.has(key) === false) {

@@ -1,10 +1,11 @@
 var pool = require('./pool-factory');
 
+// TODO make the function check if all parameters in the set are met.
 validateParamKeys = (paramSet, params) => {
   for (let key of Object.keys(params)) {
     if (paramSet.has(key) === false) {
       return {
-        error: {message: key + ' is not a valid field to update.'},
+        error: {message: key + ' is not a valid field for this query.'},
         valid: false
       };
     }
@@ -114,7 +115,7 @@ module.exports = {
         console.log(error);
         callback(error, null);
       } else {
-        const message = 'Successfully inserted ' + JSON.stringify(params) + '.';
+        const message = 'Successfully updated ' + JSON.stringify(params) + '.';
         console.log(message);
         callback(null, {message: message});
       }
