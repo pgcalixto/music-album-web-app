@@ -5,6 +5,7 @@ import NewAlbum from './NewAlbum';
 import Album from './Album';
 import Collection from './Collection';
 import CollectionAddAlbums from './CollectionAddAlbums';
+import SearchResults from './SearchResults';
 
 export default class Main extends Component {
   render() {
@@ -18,6 +19,7 @@ export default class Main extends Component {
             component={Collection}/>
           <Route path='/collections/:collection_id/add-albums'
             component={CollectionAddAlbums}/>
+          <Route path='/search/:searchText' component={SearchResults}/>
         </Switch>
       </main>
     )
