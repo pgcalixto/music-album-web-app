@@ -17,9 +17,7 @@ export default class SearchResults extends Component {
     // TODO check for fetch() and json() errors
     const searchText = this.props.match.params.searchText;
     const response = await fetch('/albumsByName/' + searchText);
-    const albumList = await response.json();
-
-    var albums = <Albums albums={albumList} />;
+    const albums = await response.json();
     this.setState({ albums: albums });
   }
 
@@ -33,7 +31,10 @@ export default class SearchResults extends Component {
         <h3>
           {`Resultados da busca`}
         </h3>
-        { this.state.albums }
+        {this.state.albums == null || this.state.albums.length === 0
+        ? 'Não há álbums contendo o texto pesquisado.'
+        : <Albums albums={this.state.albums} />
+        }
       </Grid>
     );
   }
