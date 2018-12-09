@@ -1,0 +1,14 @@
+
+.Home {
+  padding: 16px;
+  table-layout: fixed;
+  margin-right: 0px;
+}
+
+.Albums Table {
+  max-width: 600px;
+}
+
+.Collections Table {
+  max-width: 150px;
+}

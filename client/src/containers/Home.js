@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import Albums from '../components/Albums';
 import Collections from '../components/Collections';
+
+import './Home.css';
 
 export default class Home extends Component {
 
@@ -28,7 +31,6 @@ export default class Home extends Component {
     this.setState({ collections: collections });
   }
 
-
   componentDidMount() {
     this.renderCollections();
     this.renderAlbums();
@@ -37,12 +39,18 @@ export default class Home extends Component {
   render() {
     return (
       <div className="Home">
-        {`ÁLBUNS E COLEÇÕES`}
+        <h1>
+          {`COLETÂNEA MUSICAL`}
+        </h1>
         <br />
-        <Link to="/add-album/">Adicionar novo álbum</Link>
-        <br />
-        { this.state.albums }
         { this.state.collections }
+        { this.state.albums }
+        <Button
+          href="/new-album"
+          bsStyle="info"
+        >
+          Adicionar novo álbum
+        </Button>
       </div>
     );
   }

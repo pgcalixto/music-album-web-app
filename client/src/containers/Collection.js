@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import {
-  FormGroup,
-  FormControl,
-  ControlLabel,
   Button,
+  ControlLabel,
+  FormControl,
+  FormGroup,
+  Grid,
+  Panel,
   Table
 } from 'react-bootstrap';
+
+import './Collection.css';
 
 export default class Collection extends Component {
   constructor(props) {
@@ -120,67 +124,86 @@ export default class Collection extends Component {
 
     return (
       <div>
-        Editar informações
-        <form onSubmit={this.submitForm}>
-          {fields.map((field, index) =>
-            <FormGroup
-              key={field}
-              controlId={field}
-            >
-              <ControlLabel>
-                {fieldNames_ptbr[index]}:
-              </ControlLabel>
-              <FormControl
-                type="text"
-                value={
-                  this.state.collection == null
-                  ? ''
-                  : this.state.collection[field]}
-                placeholder=""
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-          )}
-          <Button
-            type="submit"
-            disabled={
-              this.isEquivalent(this.state.originalCollection,
-                                this.state.collection)}
-          >Salvar</Button>
-        </form>
-        <Link
-          to={"/collections/" + collection_id + "/add-albums/"}>
-          Adicionar novo álbum
-        </Link>
-        {this.state.albums.length === 0
-        ? null
-        : <Table striped bordered condensed hover>
-            <caption>Álbuns da coleção</caption>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Título</th>
-                <th>Artista</th>
-                <th>Ano</th>
-              </tr>
-            </thead>
-            <tbody>
-              { this.state.albums.map(value =>
-                <tr key={value.id}>
-                  <td> {value.id} </td>
-                  <td> {value.title} </td>
-                  <td> {value.artist} </td>
-                  <td> {value.year} </td>
-                  <td>
-                    <form id={value.id} onSubmit={this.submitDeleteAlbum}>
-                      <Button type="submit">Remover da coleção</Button>
-                    </form>
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
-        }
+        <Grid className="CollectionInfo">
+          <h3>
+            Editar informações
+          </h3>
+          <form onSubmit={this.submitForm}>
+            {fields.map((field, index) =>
+              <FormGroup
+                key={field}
+                controlId={field}
+              >
+                <ControlLabel>
+                  {fieldNames_ptbr[index]}
+                </ControlLabel>
+                <FormControl
+                  type="text"
+                  value={
+                    this.state.collection == null
+                    ? ''
+                    : this.state.collection[field]}
+                    placeholder=""
+                    onChange={this.handleChange}
+                    />
+              </FormGroup>
+            )}
+            <Button
+              type="submit"
+              disabled={
+                this.isEquivalent(this.state.originalCollection,
+                  this.state.collection)}
+            >Salvar</Button>
+          </form>
+        </Grid>
+        <Panel className="AlbumPanel">
+          <Panel.Heading>
+            Álbuns
+          </Panel.Heading>
+          <Panel.Body>
+            {this.state.albums.length === 0
+            ? null
+            : <Table
+                className="AlbumTable"
+                striped
+                bordered
+                condensed
+                hover
+                responsive
+              >
+                <thead>
+                  <tr>
+                    <th>Título</th>
+                    <th>Artista</th>
+                    <th>Ano</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  { this.state.albums.map(value =>
+                    <tr key={value.id}>
+                      <td> {value.title} </td>
+                      <td> {value.artist} </td>
+                      <td> {value.year} </td>
+                      <td>
+                        <form id={value.id} onSubmit={this.submitDeleteAlbum}>
+                          <Button bsStyle="danger" type="submit">
+                            Remover
+                          </Button>
+                        </form>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </Table>
+            }
+            <Button
+              href={"/collections/" + collection_id + "/add-albums/"}
+              bsStyle="info"
+              >
+              Adicionar novo álbum
+            </Button>
+          </Panel.Body>
+        </Panel>
       </div>
     );
   }
@@ -208,7 +231,7 @@ export default class Collection extends Component {
 
   render() {
     return (
-      <div className="CollectionInfo">
+      <div className="Collection">
         { this.renderInformation() }
       </div>
     );

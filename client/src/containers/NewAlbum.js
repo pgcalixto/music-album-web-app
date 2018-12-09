@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
-import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
+import {
+  FormGroup,
+  FormControl,
+  ControlLabel,
+  Button,
+  Panel
+} from 'react-bootstrap';
 
-class NewAlbum extends Component {
+export default class NewAlbum extends Component {
 
   constructor(props) {
     super(props);
@@ -62,30 +68,30 @@ class NewAlbum extends Component {
     const fields = ['title', 'artist', 'year'];
 
     return (
-      <div>
-        ADICIONAR ÁLBUM
-        <form onSubmit={this.submitForm}>
-          {fields.map((field, index) =>
-            <FormGroup
-              key={field}
-              controlId={field}
-            >
-              <ControlLabel>
-                {this.titleCase(fieldNames_ptbr[index])}:
-              </ControlLabel>
-              <FormControl
-                type="text"
-                value={this.state[field]}
-                placeholder=""
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-          )}
-          <Button type="submit">Submeter</Button>
-        </form>
-      </div>
+      <Panel>
+        <Panel.Heading>ADICIONAR ÁLBUM</Panel.Heading>
+        <Panel.Body>
+          <form onSubmit={this.submitForm}>
+            {fields.map((field, index) =>
+              <FormGroup
+                key={field}
+                controlId={field}
+                >
+                <ControlLabel>
+                  {this.titleCase(fieldNames_ptbr[index])}:
+                </ControlLabel>
+                <FormControl
+                  type="text"
+                  value={this.state[field]}
+                  placeholder=""
+                  onChange={this.handleChange}
+                  />
+              </FormGroup>
+            )}
+            <Button bsStyle="primary" type="submit">Submeter</Button>
+          </form>
+        </Panel.Body>
+      </Panel>
     );
   }
 }
-
-export default NewAlbum;

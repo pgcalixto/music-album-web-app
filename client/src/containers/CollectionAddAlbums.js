@@ -4,6 +4,8 @@ import {
   Table
 } from 'react-bootstrap';
 
+import './CollectionAddAlbums.css';
+
 export default class CollectionAddAlbums extends Component {
   constructor(props) {
     super(props);
@@ -41,15 +43,15 @@ export default class CollectionAddAlbums extends Component {
 
   renderInformation() {
     return (
-      <div>
-        Adicionar álbums à coleção:
+      <div className="CollecionAddAlbumsInfos">
+        <h3>
+          {`Adicionar álbums à coleção:`}
+        </h3>
         {this.state.albums.length === 0
-        ? 'Não há álbuns fora desta coleção.'
+        ? <div> {`Não há álbuns fora desta coleção.`} </div>
         : <Table striped bordered condensed hover>
-            <caption>Álbuns da coleção</caption>
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Título</th>
                 <th>Artista</th>
                 <th>Ano</th>
@@ -58,13 +60,12 @@ export default class CollectionAddAlbums extends Component {
             <tbody>
               { this.state.albums.map(value =>
                 <tr key={value.id}>
-                  <td> {value.id} </td>
                   <td> {value.title} </td>
                   <td> {value.artist} </td>
                   <td> {value.year} </td>
                   <td>
                     <form id={value.id} onSubmit={this.submitAddAlbum}>
-                      <Button type="submit">Adicionar</Button>
+                      <Button bsStyle="info" type="submit">Adicionar</Button>
                     </form>
                   </td>
                 </tr>
@@ -93,7 +94,7 @@ export default class CollectionAddAlbums extends Component {
 
   render() {
     return (
-      <div className="CollectionInfo">
+      <div className="CollectionAddAlbums">
         { this.renderInformation() }
       </div>
     );

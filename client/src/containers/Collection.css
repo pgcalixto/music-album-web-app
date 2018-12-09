@@ -1,0 +1,17 @@
+
+.CollectionInfo {
+  margin: auto;
+  margin-bottom: 50px;
+  max-width: 400px;
+}
+
+.AlbumPanel {
+  margin: auto;
+  max-width: 800px;
+}
+
+.AlbumTable td:nth-child(4) {
+  border-style: hidden;
+  border-left: 0px;
+  background-color: #ffffff;
+}

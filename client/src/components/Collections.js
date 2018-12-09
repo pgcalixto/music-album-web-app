@@ -10,14 +10,12 @@ export default class Collections extends Component {
         <caption>Coleções de álbuns</caption>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Nome</th>
           </tr>
         </thead>
         <tbody>
           { this.props.collections.map(value =>
             <tr key={value.id}>
-              <td> {value.id} </td>
               <td> <Link to={"/collections/" + value.id}>
                 {value.name}
               </Link> </td>
@@ -31,7 +29,7 @@ export default class Collections extends Component {
 
   render() {
     return (
-      <div>
+      <div className="Collections">
         { this.renderTable() }
       </div>
     );

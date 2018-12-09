@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
+import {
+  Button,
+  ControlLabel,
+  FormControl,
+  FormGroup,
+  Grid
+} from 'react-bootstrap';
+
+import './Album.css';
 
 export default class Album extends Component {
   constructor(props) {
@@ -89,8 +97,10 @@ export default class Album extends Component {
     const fields = ['title', 'artist', 'year'];
 
     return (
-      <div>
-        Editar informações
+      <Grid className="AlbumGrid">
+        <h3>
+          Editar informações
+        </h3>
         <form onSubmit={this.submitForm}>
           {fields.map((field, index) =>
             <FormGroup
@@ -98,7 +108,7 @@ export default class Album extends Component {
               controlId={field}
             >
               <ControlLabel>
-                {fieldNames_ptbr[index]}:
+                {fieldNames_ptbr[index]}
               </ControlLabel>
               <FormControl
                 type="text"
@@ -112,12 +122,13 @@ export default class Album extends Component {
             </FormGroup>
           )}
           <Button
+            bsStyle="primary"
             type="submit"
             disabled={
               this.isEquivalent(this.state.originalAlbum, this.state.album)}
           >Salvar</Button>
         </form>
-      </div>
+      </Grid>
     );
   }
 

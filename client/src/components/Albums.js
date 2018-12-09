@@ -9,7 +9,6 @@ export default class Albums extends Component {
         <caption>Álbuns</caption>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Título</th>
             <th>Artista</th>
             <th>Ano</th>
@@ -18,7 +17,6 @@ export default class Albums extends Component {
         <tbody>
           { this.props.albums.map(value =>
             <tr key={value.id}>
-              <td> {value.id} </td>
               <td> <Link to={"/albums/" + value.id}>{value.title}</Link> </td>
               <td> {value.artist} </td>
               <td> {value.year} </td>
@@ -31,7 +29,7 @@ export default class Albums extends Component {
 
   render() {
     return (
-      <div>
+      <div className="Albums">
         { this.renderTable() }
       </div>
     );

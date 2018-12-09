@@ -1,0 +1,21 @@
+
+.CollectionAddAlbums {
+  padding: 16px;
+}
+
+.CollecionAddAlbumsInfos {
+  text-align: center;
+  margin: auto;
+}
+
+.CollectionAddAlbums Table {
+  text-align: left;
+  margin: auto;
+  max-width: 600px;
+}
+
+.CollectionAddAlbums Table td:nth-child(4) {
+  border-style: hidden;
+  border-left: 0px;
+  background-color: #ffffff;
+}
