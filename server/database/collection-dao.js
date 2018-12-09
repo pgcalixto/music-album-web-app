@@ -1,20 +1,5 @@
 var pool = require('./pool-factory');
-
-// TODO make the function check if all parameters in the set are met.
-validateParamKeys = (paramSet, params) => {
-  for (let key of Object.keys(params)) {
-    if (paramSet.has(key) === false) {
-      return {
-        error: {message: key + ' is not a valid field for this query.'},
-        valid: false
-      };
-    }
-  }
-  return {
-    error: null,
-    valid: true
-  }
-}
+var utils = require('./utils');
 
 module.exports = {
   list: function(callback) {
@@ -32,7 +17,7 @@ module.exports = {
   retrieve: function(param, callback) {
 
     const paramKey = new Set(['id']);
-    const keyIsValid = validateParamKeys(paramKey, param);
+    const keyIsValid = utils.validateParamKeys(paramKey, param);
     if (keyIsValid.error) {
       callback(keyIsValid.error, null);
       return;
@@ -57,7 +42,7 @@ module.exports = {
     }
 
     const paramKeys = new Set(['id', 'name']);
-    const keysAreValid = validateParamKeys(paramKeys, params);
+    const keysAreValid = utils.validateParamKeys(paramKeys, params);
     if (keysAreValid.error) {
       callback(keysAreValid.error, null);
       return;
@@ -81,7 +66,7 @@ module.exports = {
 
   addAlbum: function(params, callback) {
     const paramKeys = new Set(['collection_id', 'album_id']);
-    const keysAreValid = validateParamKeys(paramKeys, params);
+    const keysAreValid = utils.validateParamKeys(paramKeys, params);
     if (keysAreValid.error) {
       callback(keysAreValid.error, null);
       return;
@@ -107,7 +92,7 @@ module.exports = {
     }
 
     const paramKeys = new Set(['id']);
-    const keysAreValid = validateParamKeys(paramKeys, params);
+    const keysAreValid = utils.validateParamKeys(paramKeys, params);
     if (keysAreValid.error) {
       callback(keysAreValid.error, null);
       return;
@@ -138,7 +123,7 @@ module.exports = {
     }
 
     const paramKeys = new Set(['id']);
-    const keysAreValid = validateParamKeys(paramKeys, params);
+    const keysAreValid = utils.validateParamKeys(paramKeys, params);
     if (keysAreValid.error) {
       callback(keysAreValid.error, null);
       return;
@@ -165,7 +150,7 @@ module.exports = {
 
     // check if desired keys are present
     const paramKeys = new Set(['collection_id', 'album_id']);
-    const keysAreValid = validateParamKeys(paramKeys, params);
+    const keysAreValid = utils.validateParamKeys(paramKeys, params);
     if (keysAreValid.error) {
       callback(keysAreValid.error, null);
       return;
