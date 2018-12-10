@@ -32,3 +32,12 @@ npm start
   `setup.sh` and `server/database/pool-factory.js`.
 * Add tests for the Node server (include API validation)
 * Add tests for the React client
+
+## Issues
+
+* In Chrome, when coming back from the page to add new albums to a collection,
+  the pages contents are just a JSON in the form of
+  `{"id": <collection_id>, "name": <collection_name>}`. It was found out that
+  this happens because Chrome retrieves the pages from the disk cache.
+  In Firefox, this does not happen and pages are re-rendered correctly after
+  coming back from the CollectionAddAlbums page.
