@@ -10,7 +10,7 @@ const pool = mysql.createPool({
 });
 
 pool.on('acquire', function(connection) {
-  console.log('Connected, my magnificent!');
+  console.log('Connected to the database pool!');
 });
 
 module.exports = pool;
