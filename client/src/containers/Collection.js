@@ -122,6 +122,7 @@ export default class Collection extends Component {
               </FormGroup>
             )}
             <Button
+              bsStyle="primary"
               type="submit"
               disabled={
                 isEquivalent(this.state.originalCollection,
