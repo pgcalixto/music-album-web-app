@@ -41,6 +41,7 @@ npm start
 
 ## To-dos
 
+* Add feature to delete an album
 * Set password from command line (environment variable or argument) for
   `setup.sh` and `server/database/pool-factory.js`.
 * Add tests for the Node server (include API validation)
