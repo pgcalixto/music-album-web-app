@@ -4,7 +4,20 @@ Web application using Node, React and MySQL to store information about music alb
 ## Requirements
 
 * MySQL
+* Nodejs
 * npm
+
+**Note:** the Nodejs used for the was 8.0 and greater. For Nodejs version 6.0,
+the path for concurrently binary changes, thus making the package.json to change
+from `./node_modules/.bin/concurrently` to `./node_modules/concurrently/bin`.
+
+**Note**: For the interaction with the database to work, the user (`root` in
+this case) shall have its plugin `mysql_native_password` set. This was achieved
+by running the following command in the MySQL CLI:
+
+```sql
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+```
 
 ## Prepare
 
@@ -32,6 +45,8 @@ npm start
   `setup.sh` and `server/database/pool-factory.js`.
 * Add tests for the Node server (include API validation)
 * Add tests for the React client
+* Make it possible to connect to the MySQL database without
+  `mysql_native_password` plugin set
 
 ## Issues
 
