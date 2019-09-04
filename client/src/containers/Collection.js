@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Button,
   ControlLabel,
@@ -7,10 +7,10 @@ import {
   Grid,
   Panel,
   Table
-} from 'react-bootstrap';
-import { isEquivalent } from '../utils';
+} from "react-bootstrap";
+import { isEquivalent } from "../utils";
 
-import './Collection.css';
+import "./Collection.css";
 
 export default class Collection extends Component {
   constructor(props) {
@@ -40,10 +40,12 @@ export default class Collection extends Component {
   async submitForm(event) {
     event.preventDefault();
 
-    var params = {}
-    const fields = ['name'];
+    var params = {};
+    const fields = ["name"];
     for (var field of fields) {
-      if (this.state.collection[field] !== this.state.originalCollection[field]) {
+      if (
+        this.state.collection[field] !== this.state.originalCollection[field]
+      ) {
         params[field] = this.state.collection[field];
       }
     }
@@ -58,10 +60,10 @@ export default class Collection extends Component {
 
     const collection_id = this.props.match.params.collection_id;
     await fetch("/collections/" + collection_id, request)
-      .then(function (response) {
+      .then(function(response) {
         return response.json();
       })
-      .then(function (data) {
+      .then(function(data) {
         console.log(JSON.stringify(data));
       });
 
@@ -77,13 +79,13 @@ export default class Collection extends Component {
 
     const collection_id = this.props.match.params.collection_id;
     const album_id = event.target.id;
-    const url = '/collections/' + collection_id + '/albums/' + album_id;
+    const url = "/collections/" + collection_id + "/albums/" + album_id;
 
     await fetch(url, request)
-      .then(function (response) {
+      .then(function(response) {
         return response.json();
       })
-      .then(function (data) {
+      .then(function(data) {
         console.log(JSON.stringify(data));
       });
 
@@ -91,53 +93,47 @@ export default class Collection extends Component {
   }
 
   renderInformation() {
-    const collection_id = this.props.match.params.collection_id
-    const fieldNames_ptbr = ['Nome'];
-    const fields = ['name'];
+    const collection_id = this.props.match.params.collection_id;
+    const fieldNames_ptbr = ["Nome"];
+    const fields = ["name"];
 
     return (
       <div>
         <Grid className="CollectionInfo">
-          <h3>
-            Editar informações
-          </h3>
+          <h3>Editar informações</h3>
           <form onSubmit={this.submitForm}>
-            {fields.map((field, index) =>
-              <FormGroup
-                key={field}
-                controlId={field}
-              >
-                <ControlLabel>
-                  {fieldNames_ptbr[index]}
-                </ControlLabel>
+            {fields.map((field, index) => (
+              <FormGroup key={field} controlId={field}>
+                <ControlLabel>{fieldNames_ptbr[index]}</ControlLabel>
                 <FormControl
                   type="text"
                   value={
                     this.state.collection == null
-                    ? ''
-                    : this.state.collection[field]}
-                    placeholder=""
-                    onChange={this.handleChange}
-                    />
+                      ? ""
+                      : this.state.collection[field]
+                  }
+                  placeholder=""
+                  onChange={this.handleChange}
+                />
               </FormGroup>
-            )}
+            ))}
             <Button
               bsStyle="primary"
               type="submit"
-              disabled={
-                isEquivalent(this.state.originalCollection,
-                  this.state.collection)}
-            >Salvar</Button>
+              disabled={isEquivalent(
+                this.state.originalCollection,
+                this.state.collection
+              )}
+            >
+              Salvar
+            </Button>
           </form>
         </Grid>
         <Panel className="AlbumPanel">
-          <Panel.Heading>
-            Álbuns
-          </Panel.Heading>
+          <Panel.Heading>Álbuns</Panel.Heading>
           <Panel.Body>
-            {this.state.albums.length === 0
-            ? null
-            : <Table
+            {this.state.albums.length === 0 ? null : (
+              <Table
                 className="AlbumTable"
                 striped
                 bordered
@@ -153,7 +149,7 @@ export default class Collection extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  { this.state.albums.map(value =>
+                  {this.state.albums.map(value => (
                     <tr key={value.id}>
                       <td> {value.title} </td>
                       <td> {value.artist} </td>
@@ -166,14 +162,14 @@ export default class Collection extends Component {
                         </form>
                       </td>
                     </tr>
-                  )}
+                  ))}
                 </tbody>
               </Table>
-            }
+            )}
             <Button
               href={"/collections/" + collection_id + "/add-albums/"}
               bsStyle="info"
-              >
+            >
               Adicionar novo álbum
             </Button>
           </Panel.Body>
@@ -184,10 +180,10 @@ export default class Collection extends Component {
 
   async fetchCollection() {
     const collection_id = this.props.match.params.collection_id;
-    var response = await fetch('/collections/' + collection_id);
+    var response = await fetch("/collections/" + collection_id);
     const collection = await response.json();
 
-    response = await fetch('/collections/' + collection_id + '/albums');
+    response = await fetch("/collections/" + collection_id + "/albums");
     const albums = await response.json();
 
     // JSON.parse(JSON.stringify) is used for deep copy of the objects, to make
@@ -204,10 +200,6 @@ export default class Collection extends Component {
   }
 
   render() {
-    return (
-      <div className="Collection">
-        { this.renderInformation() }
-      </div>
-    );
+    return <div className="Collection">{this.renderInformation()}</div>;
   }
 }

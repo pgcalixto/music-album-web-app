@@ -1,13 +1,12 @@
-
 .Home {
   table-layout: fixed;
   margin-right: 0px;
 }
 
-.Albums Table {
+.Albums table {
   max-width: 600px;
 }
 
-.Collections Table {
+.Collections table {
   max-width: 150px;
 }

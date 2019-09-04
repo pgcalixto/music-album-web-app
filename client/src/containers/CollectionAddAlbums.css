@@ -1,16 +1,15 @@
-
 .CollecionAddAlbumsInfos {
   text-align: center;
   margin: auto;
 }
 
-.CollectionAddAlbums Table {
+.CollectionAddAlbums table {
   text-align: left;
   margin: auto;
   max-width: 600px;
 }
 
-.CollectionAddAlbums Table td:nth-child(4) {
+.CollectionAddAlbums table td:nth-child(4) {
   border-style: hidden;
   border-left: 0px;
   background-color: #ffffff;

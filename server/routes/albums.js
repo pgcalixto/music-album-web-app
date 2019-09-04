@@ -1,12 +1,12 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-var albumDao = require('../database/album-dao');
+var albumDao = require("../database/album-dao");
 
 /* GET albums listing. */
-router.get('/', function(req, res, next) {
+router.get("/", function(req, res, next) {
   albumDao.list((err, results) => {
     if (err) {
-      res.status(500).send({message: err.message || "Database failure."});
+      res.status(500).send({ message: err.message || "Database failure." });
     } else {
       res.send(results);
     }
@@ -14,10 +14,10 @@ router.get('/', function(req, res, next) {
 });
 
 /* POST new album. */
-router.post('/', function(req, res, next) {
+router.post("/", function(req, res, next) {
   albumDao.create(req.body, (err, results) => {
     if (err) {
-      res.status(500).send({message: err.message || "Database failure."});
+      res.status(500).send({ message: err.message || "Database failure." });
     } else {
       res.send(results);
     }
@@ -25,13 +25,13 @@ router.post('/', function(req, res, next) {
 });
 
 /* GET album by id. */
-router.get('/:album_id', function(req, res, next) {
-  albumDao.retrieve({id: req.params.album_id}, (err, results) => {
+router.get("/:album_id", function(req, res, next) {
+  albumDao.retrieve({ id: req.params.album_id }, (err, results) => {
     if (err) {
-      res.status(500).send({message: err.message || "Database failure."});
+      res.status(500).send({ message: err.message || "Database failure." });
     } else {
       if (results.length === 0) {
-        res.status(404).send({message: "Album not found by ID."});
+        res.status(404).send({ message: "Album not found by ID." });
       } else {
         res.send(results[0]);
       }
@@ -40,13 +40,13 @@ router.get('/:album_id', function(req, res, next) {
 });
 
 /* PATCH album fields. */
-router.patch('/:album_id', function(req, res, next) {
+router.patch("/:album_id", function(req, res, next) {
   var params = req.body;
   params.id = req.params.album_id;
   albumDao.partialUpdate(params, (err, results) => {
     if (err) {
       console.log(err);
-      res.status(500).send({message: err.message || "Dabatase failure."});
+      res.status(500).send({ message: err.message || "Dabatase failure." });
     } else {
       console.log(results);
       res.send(results);
