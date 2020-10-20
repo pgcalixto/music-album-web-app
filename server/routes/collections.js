@@ -1,12 +1,12 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-var collectionDao = require('../database/collection-dao');
+var collectionDao = require("../database/collection-dao");
 
 /* GET collections listing. */
-router.get('/', function(req, res, next) {
+router.get("/", function(req, res, next) {
   collectionDao.list((err, results) => {
     if (err) {
-      res.status(500).send({message: err.message || "Database failure."});
+      res.status(500).send({ message: err.message || "Database failure." });
     } else {
       res.send(results);
     }
@@ -14,13 +14,13 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET collection by id. */
-router.get('/:collection_id', function(req, res, next) {
-  collectionDao.retrieve({id: req.params.collection_id}, (err, results) => {
+router.get("/:collection_id", function(req, res, next) {
+  collectionDao.retrieve({ id: req.params.collection_id }, (err, results) => {
     if (err) {
-      res.status(500).send({message: err.message || "Database failure."});
+      res.status(500).send({ message: err.message || "Database failure." });
     } else {
       if (results.length === 0) {
-        res.status(404).send({message: "Collection not found by ID."});
+        res.status(404).send({ message: "Collection not found by ID." });
       } else {
         res.send(results[0]);
       }
@@ -29,13 +29,13 @@ router.get('/:collection_id', function(req, res, next) {
 });
 
 /* PATCH collection fields. */
-router.patch('/:collection_id', function(req, res, next) {
+router.patch("/:collection_id", function(req, res, next) {
   var params = req.body;
   params.id = req.params.collection_id;
   collectionDao.partialUpdate(params, (err, results) => {
     if (err) {
       console.log(err);
-      res.status(500).send({message: err.message || "Dabatase failure."});
+      res.status(500).send({ message: err.message || "Dabatase failure." });
     } else {
       console.log(results);
       res.send(results);
@@ -44,13 +44,13 @@ router.patch('/:collection_id', function(req, res, next) {
 });
 
 /* GET collection albums. */
-router.get('/:collection_id/albums', function(req, res, next) {
+router.get("/:collection_id/albums", function(req, res, next) {
   var params = req.body;
   params.id = req.params.collection_id;
   collectionDao.retrieveAlbums(params, (err, results) => {
     if (err) {
       console.log(err);
-      res.status(500).send({message: err.message || "Database failure."});
+      res.status(500).send({ message: err.message || "Database failure." });
     } else {
       console.log(results);
       res.send(results);
@@ -59,7 +59,7 @@ router.get('/:collection_id/albums', function(req, res, next) {
 });
 
 /* POST add album to collection. */
-router.post('/:collection_id/albums', function(req, res, next) {
+router.post("/:collection_id/albums", function(req, res, next) {
   // build album and collection ID params
   var params = req.body;
   params.collection_id = req.params.collection_id;
@@ -68,7 +68,7 @@ router.post('/:collection_id/albums', function(req, res, next) {
 
   collectionDao.addAlbum(params, (err, results) => {
     if (err) {
-      res.status(500).send({message: err.message || "Database failure."});
+      res.status(500).send({ message: err.message || "Database failure." });
     } else {
       res.send(results);
     }
@@ -76,15 +76,15 @@ router.post('/:collection_id/albums', function(req, res, next) {
 });
 
 /* DELETE album from collection. */
-router.delete('/:collection_id/albums/:album_id', function(req, res, next) {
+router.delete("/:collection_id/albums/:album_id", function(req, res, next) {
   const params = {
-    'collection_id': req.params.collection_id,
-    'album_id': req.params.album_id
+    collection_id: req.params.collection_id,
+    album_id: req.params.album_id
   };
   collectionDao.deleteOneAlbum(params, (err, results) => {
     if (err) {
       console.log(err);
-      res.status(500).send({message: err.message || "Database failure."});
+      res.status(500).send({ message: err.message || "Database failure." });
     } else {
       console.log(results);
       res.send(results);
@@ -93,11 +93,11 @@ router.delete('/:collection_id/albums/:album_id', function(req, res, next) {
 });
 
 /* GET albums not in collection. */
-router.get('/:collection_id/remaining-albums', function(req, res, next) {
-  const idParam = {id: req.params.collection_id};
+router.get("/:collection_id/remaining-albums", function(req, res, next) {
+  const idParam = { id: req.params.collection_id };
   collectionDao.retrieveRemainingAlbums(idParam, (err, results) => {
     if (err) {
-      res.status(500).send({message: err.message || "Database failure."});
+      res.status(500).send({ message: err.message || "Database failure." });
     } else {
       res.send(results);
     }

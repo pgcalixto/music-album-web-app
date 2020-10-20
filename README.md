@@ -1,11 +1,12 @@
 # music-album-web-app
+
 Web application using Node, React and MySQL to store information about music albums.
 
 ## Requirements
 
-* MySQL
-* Nodejs
-* npm
+- MySQL
+- Nodejs
+- npm
 
 **Note:** the Nodejs used for the was 8.0 and greater. For Nodejs version 6.0,
 the path for concurrently binary changes, thus making the package.json to change
@@ -41,17 +42,17 @@ npm start
 
 ## To-dos
 
-* Add feature to delete an album
-* Set password from command line (environment variable or argument) for
+- Add feature to delete an album
+- Set password from command line (environment variable or argument) for
   `setup.sh` and `server/database/pool-factory.js`.
-* Add tests for the Node server (include API validation)
-* Add tests for the React client
-* Make it possible to connect to the MySQL database without
+- Add tests for the Node server (include API validation)
+- Add tests for the React client
+- Make it possible to connect to the MySQL database without
   `mysql_native_password` plugin set
 
 ## Issues
 
-* In Chrome, when coming back from the page to add new albums to a collection,
+- In Chrome, when coming back from the page to add new albums to a collection,
   the pages contents are just a JSON in the form of
   `{"id": <collection_id>, "name": <collection_name>}`. It was found out that
   this happens because Chrome retrieves the pages from the disk cache.

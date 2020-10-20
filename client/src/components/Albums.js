@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 
 export default class Albums extends Component {
@@ -15,23 +15,22 @@ export default class Albums extends Component {
           </tr>
         </thead>
         <tbody>
-          { this.props.albums.map(value =>
+          {this.props.albums.map(value => (
             <tr key={value.id}>
-              <td> <Link to={"/albums/" + value.id}>{value.title}</Link> </td>
+              <td>
+                {" "}
+                <Link to={"/albums/" + value.id}>{value.title}</Link>{" "}
+              </td>
               <td> {value.artist} </td>
               <td> {value.year} </td>
             </tr>
-          )}
+          ))}
         </tbody>
       </Table>
     );
-  }
+  };
 
   render() {
-    return (
-      <div className="Albums">
-        { this.renderTable() }
-      </div>
-    );
+    return <div className="Albums">{this.renderTable()}</div>;
   }
 }
